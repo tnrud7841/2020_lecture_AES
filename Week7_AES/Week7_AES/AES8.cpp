@@ -96,20 +96,17 @@ void AES8_InvShiftRows(byte state[16]) {
     state[7] = state[11];
     state[11] = temp;
 
-    // ¼ö½ÄÀ» ÀÌ¿ëÇÑ ShiftRows/InvShiftRows FIPS-197¿¡¼­ Ã£¾Æº¸±â!
 }
 
 
 
-//GF(2^8) xtime() ÇÔ¼ö
+//GF(2^8) xtime() í•¨ìˆ˜
 inline byte GF_xtime(byte gf) {
     return ((((gf >> 7) & 0x01) == 1) ? (gf << 1) ^ 0x1b : gf << 1);
 }
 
 void AES8_InvMixColumns(byte state[16]) {
     byte sum8, tmp0, tmp1, tmp2, tmp3;
-
-    // ¿ø¸®¸¦ È®ÀÎÇÏ¼¼¿ä!
     sum8 = GF_xtime(GF_xtime(GF_xtime(state[0] ^ state[1] ^ state[2] ^ state[3])));
     tmp0 = sum8 ^ GF_xtime(GF_xtime(state[0]) ^ state[0]) ^ GF_xtime(state[1]) ^ state[1]
         ^ GF_xtime(GF_xtime(state[2])) ^ state[2] ^ state[3];
